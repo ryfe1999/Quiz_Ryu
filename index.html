@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-commerce Sepatu</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    KICK CULTURE
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#produk">Produk</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#kontak">Kontak</a>
+    <span class="cart-btn" onclick="toggleCart()">🛒 Keranjang (<span id="cart-count">0</span>)</span>
+</nav>
+
+<div id="cart-panel">
+    <button id="close-cart" onclick="toggleCart()">Tutup</button>
+    <h3>Keranjang Belanja</h3>
+    <div id="cart-items"></div>
+</div>
+
+<section id="home" class="container">
+    <h2>Selamat Datang di Kick Culture!</h2>
+<p style="text-align:center; max-width:700px; margin:auto; line-height:1.6;">
+Selamat datang di <strong>Kick Culture</strong> adalah brand premium yang mengedepankan kualitas, desain elegan, dan craftmanship terbaik. Koleksi kami dikurasi secara eksklusif untuk menghadirkan sepatu yang bukan hanya nyaman digunakan, tetapi juga memberikan kesan mewah dan modern. Dengan komitmen pada detail, ketahanan material, serta estetika yang sophisticated, Kick Culture hadir sebagai pilihan utama bagi mereka yang menginginkan sepatu dengan standar tinggi. Kami terus berinovasi untuk memberikan pengalaman terbaik mulai dari pemilihan produk hingga pelayanan pelanggan, memastikan setiap langkah Anda penuh gaya dan kepercayaan diri.
+</p>
+</section>
+
+<section id="produk" class="container">
+    <h2>Produk Kami</h2>
+    <div class="products" id="product-list"></div>
+</section>
+
+<section id="tentang" class="container">
+    <h2>Tentang Kami</h2>
+    <p style="text-align:center; max-width:700px; margin:auto;">
+        Kami menyediakan sepatu sport, casual, dan formal berkualitas tinggi untuk kebutuhan harian Anda.
+    </p>
+</section>
+
+<section id="kontak" class="container">
+    <h2>Hubungi Kami</h2>
+    <form>
+        <label>Nama:</label>
+        <input type="text" placeholder="Masukkan nama" required />
+        <label>Email:</label>
+        <input type="email" placeholder="Masukkan email" required />
+        <label>Pesan:</label>
+        <textarea rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+        <button type="submit">Kirim</button>
+    </form>
+</section>
+
+<script>
+    const products = [
+        { id:1, name:"Sepatu Casual 1", price:1350000, img:"id-11134207-7r98u-lxjvbzo056rx57.jpg" },
+        { id:2, name:"Sepatu Sport 2" , price:1420000, img:"images.jpg" },
+        { id:3, name:"Sepatu Casual 1", price:1300000, img:"images (1).jpg" },
+        { id:4, name:"Sepatu Casual 2", price:1280000, img:"images (2).jpg" },
+        { id:5, name:"Sepatu Formal 1", price:1500000, img:"images (3).jpg" },
+        { id:6, name:"Sepatu Formal 2", price:1550000, img:"images (4).jpg" }
+    ];
+
+    const productList = document.getElementById("product-list");
+
+    products.forEach(p => {
+        productList.innerHTML += `
+            <div class="product">
+                <img src="${p.img}" />
+                <h3>${p.name}</h3>
+                <p>Rp ${p.price.toLocaleString()}</p>
+                <button onclick="addToCart(${p.id})">Tambah ke Keranjang</button>
+            </div>
+        `;
+    });
+
+    let cart = [];
+
+    function addToCart(id){
+        const item = products.find(p => p.id === id);
+        cart.push(item);
+        document.getElementById("cart-count").innerText = cart.length;
+        renderCart();
+    }
+
+    function renderCart(){
+        const container = document.getElementById("cart-items");
+        container.innerHTML = "";
+        cart.forEach(c => {
+            container.innerHTML += `<div>${c.name} - Rp ${c.price.toLocaleString()}</div>`;
+        });
+    }
+
+    function toggleCart(){
+        document.getElementById("cart-panel").classList.toggle("open");
+    }
+</script>
+
+</body>
+</html>
